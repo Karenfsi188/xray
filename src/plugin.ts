@@ -11,8 +11,9 @@ export interface XrayPluginOptions {
  * Build plugin that injects `data-insp-path` attributes on every DOM element.
  * Wraps `code-inspector-plugin` with xray defaults.
  *
- * Returns a plugin object for webpack/vite/rspack/esbuild,
- * or a rules object for turbopack (Next.js).
+ * For webpack/vite/rspack/esbuild: returns a bundler plugin object.
+ * For turbopack: returns Record<string, { loaders: Array<{ loader: string; options: object }> }>
+ * matching the Next.js `turbopack.rules` format.
  */
 export function xrayPlugin(options: XrayPluginOptions) {
   return codeInspectorPlugin({
