@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 import { useBadge } from './use-badge'
@@ -41,6 +41,7 @@ function XrayImpl({
   showButton = true,
   followNextIndicator = true,
 }: XrayProps = {}) {
+  const [mounted, setMounted] = useState(false)
   const [enabled, setEnabled] = useState(false)
   const overlayRef = useRef<HTMLDivElement>(null)
   const tooltipRef = useRef<HTMLDivElement>(null)
@@ -48,6 +49,7 @@ function XrayImpl({
 
   const toggle = useCallback(() => setEnabled((prev) => !prev), [])
 
+  useEffect(() => setMounted(true), [])
   useHotkey(hotKey, toggle)
   useBadge({ badgeRef, show: showButton, followNextIndicator })
   useInspector({
@@ -57,6 +59,8 @@ function XrayImpl({
     tooltipRef,
     ignoreRefs: [badgeRef],
   })
+
+  if (!mounted) return null
 
   return createPortal(
     <>

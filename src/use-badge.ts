@@ -5,12 +5,13 @@ const BADGE_GAP = 4
 const DRAG_THRESHOLD = 10
 
 function findNextjsIndicator(): HTMLElement | null {
-  const portal = document.querySelector('nextjs-portal')
-  if (!portal?.shadowRoot) return null
-  return (
-    (portal.shadowRoot.querySelector('[data-nextjs-toast]') ??
-      portal.shadowRoot.querySelector('div')) as HTMLElement | null
-  )
+  const portals = document.querySelectorAll('nextjs-portal')
+  for (const portal of portals) {
+    if (!portal.shadowRoot) continue
+    const toast = portal.shadowRoot.querySelector('[data-nextjs-toast]') as HTMLElement | null
+    if (toast) return toast
+  }
+  return null
 }
 
 interface UseBadgeOptions {
@@ -27,7 +28,7 @@ interface UseBadgeOptions {
  *
  * Fixes from the original:
  * - Cleans up timeouts on unmount (no stale refs firing after teardown).
- * - Stops the rAF loop once the fallback position is set (no wasted frames).
+ * - Polls for the indicator for up to 5s, then stops if not found (no wasted frames).
  */
 export function useBadge({ badgeRef, show, followNextIndicator }: UseBadgeOptions) {
   useEffect(() => {
@@ -46,7 +47,6 @@ export function useBadge({ badgeRef, show, followNextIndicator }: UseBadgeOption
     let hidden = false
     let settling = false
     let positioned = false
-    let settled = false // true once fallback position is locked in
     let hideTimeout: ReturnType<typeof setTimeout> | undefined
     let reappearTimeout: ReturnType<typeof setTimeout> | undefined
 
@@ -72,7 +72,6 @@ export function useBadge({ badgeRef, show, followNextIndicator }: UseBadgeOption
         badge.style.top = ''
         badge.style.bottom = '12px'
         badge.style.left = '12px'
-        settled = true
       }
 
       if (!positioned) {
@@ -123,7 +122,6 @@ export function useBadge({ badgeRef, show, followNextIndicator }: UseBadgeOption
         reappearTimeout = setTimeout(() => {
           hidden = false
           settling = false
-          settled = false // indicator moved, re-enter polling
           badge.style.scale = '0'
           badge.style.display = ''
           badge.style.transition = 'scale 300ms cubic-bezier(0.23, 0.88, 0.26, 0.92)'
@@ -134,14 +132,19 @@ export function useBadge({ badgeRef, show, followNextIndicator }: UseBadgeOption
     }
 
     // --- Position polling ---
+    // Poll for the Next.js indicator for up to 5s after mount.
+    // Once found, keep tracking it. If not found, lock fallback position.
 
+    const DISCOVERY_TIMEOUT = 5000
+    const startTime = Date.now()
+    let found = false
     let lastKey = ''
-    const tick = () => {
-      if (settled) return // fallback position locked, stop polling
 
+    const tick = () => {
       if (!hidden && !settling) {
         const indicator = getIndicator()
         if (indicator) {
+          found = true
           const rect = indicator.getBoundingClientRect()
           const key = `${rect.top},${rect.left},${rect.right},${rect.bottom}`
           if (key !== lastKey) {
@@ -154,7 +157,11 @@ export function useBadge({ badgeRef, show, followNextIndicator }: UseBadgeOption
         }
       }
 
-      rafId = requestAnimationFrame(tick)
+      // Keep polling if indicator was found (it can move),
+      // or if we're still within the discovery window.
+      if (found || Date.now() - startTime < DISCOVERY_TIMEOUT) {
+        rafId = requestAnimationFrame(tick)
+      }
     }
     rafId = requestAnimationFrame(tick)
 
