@@ -2,18 +2,23 @@ import { useEffect, useRef, type RefObject } from 'react'
 
 // --- Fiber utilities ---
 
-function getFiberFromElement(el: Element): any | null {
-  const key = Object.keys(el).find((k) => k.startsWith('__reactFiber$'))
-  return key ? (el as any)[key] : null
+interface ReactFiber {
+  type: ((...args: unknown[]) => unknown) & { displayName?: string; name?: string } | string | null
+  return: ReactFiber | null
 }
 
-function getComponentName(fiber: any): string | null {
+function getFiberFromElement(el: Element): ReactFiber | null {
+  const key = Object.keys(el).find((k) => k.startsWith('__reactFiber$'))
+  return key ? (el as unknown as Record<string, ReactFiber>)[key] : null
+}
+
+function getComponentName(fiber: ReactFiber): string | null {
   if (!fiber.type || typeof fiber.type === 'string') return null
   return fiber.type.displayName || fiber.type.name || null
 }
 
 function getComponentInfo(el: Element): { name: string } | null {
-  let fiber = getFiberFromElement(el)
+  let fiber: ReactFiber | null = getFiberFromElement(el)
   if (!fiber) return null
 
   let depth = 0
@@ -32,8 +37,8 @@ function getComponentInfo(el: Element): { name: string } | null {
 function parseInspPath(attr: string) {
   const parts = attr.split(':')
   parts.pop() // nodeName
-  const column = parts.pop()!
-  const line = parts.pop()!
+  const column = parts.pop() ?? ''
+  const line = parts.pop() ?? ''
   const filePath = parts.join(':') // join handles Windows paths with ':'
   return { filePath, line, column }
 }

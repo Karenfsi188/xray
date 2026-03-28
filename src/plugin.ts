@@ -17,8 +17,10 @@ export interface XrayPluginOptions {
  */
 export function xrayPlugin(options: XrayPluginOptions) {
   return codeInspectorPlugin({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- code-inspector-plugin accepts wider types than our union
     bundler: options.bundler as any,
-    editor: options.editor ?? 'code' as any,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    editor: (options.editor ?? 'code') as any,
     hotKeys: false,
     showSwitch: false,
   })
