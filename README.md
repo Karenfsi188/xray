@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" width="160" alt="xray logo" />
+  <img src="https://raw.githubusercontent.com/ivanstnsk/xray/main/assets/logo.svg" width="160" alt="xray logo" />
 </p>
 
 <h1 align="center">@stinsky/xray</h1>
@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <img src="assets/xray-preview.gif" width="100%" alt="xray demo" />
+  <img src="https://raw.githubusercontent.com/ivanstnsk/xray/main/assets/xray-preview.gif" width="100%" alt="xray demo" />
 </p>
 
 ## Features
