@@ -13,6 +13,10 @@
   <img src="https://badgen.net/bundlephobia/minzip/@stinsky/xray" alt="minzipped size" />
 </p>
 
+<p align="center">
+  <img src="assets/xray-preview.gif" width="600" alt="xray demo" />
+</p>
+
 ## Features
 
 - **Click to open source** — click any element to open its source file in VS Code, WebStorm, IntelliJ, or any editor
