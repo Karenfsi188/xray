@@ -6,8 +6,12 @@
 
 <p align="center">Click-to-component for React 19. Hover any element to see its React component name and source file, click to open in your editor. The only click-to-source inspector that works with React 19, Next.js 15+, and Turbopack.</p>
 
-[![npm version](https://img.shields.io/npm/v/@stinsky/xray)](https://www.npmjs.com/package/@stinsky/xray)
-[![license](https://img.shields.io/npm/l/@stinsky/xray)](./LICENSE)
+<p align="center">
+  <a href="https://www.npmjs.com/package/@stinsky/xray"><img src="https://img.shields.io/npm/v/@stinsky/xray" alt="npm version" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@stinsky/xray" alt="license" /></a>
+  <img src="https://badgen.net/bundlephobia/tree-shaking/@stinsky/xray" alt="tree-shaking" />
+  <img src="https://badgen.net/bundlephobia/minzip/@stinsky/xray" alt="minzipped size" />
+</p>
 
 ## Features
 
